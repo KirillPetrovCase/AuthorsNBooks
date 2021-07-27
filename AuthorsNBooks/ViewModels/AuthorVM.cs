@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace AuthorsNBooks.Model
+namespace AuthorsNBooks.ViewModels
 {
-    public class Book
+    public class AuthorVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Author> Authors { get; set; } = new();
+        public List<string> Books{ get; set; }
     }
 }
