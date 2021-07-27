@@ -1,5 +1,7 @@
+using AuthorsNBooks.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +20,12 @@ namespace AuthorsNBooks
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            string connectionString = Configuration.GetConnectionString("Default");
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddControllers()
+                    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthorsNBooks", Version = "v1" });
